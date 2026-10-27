@@ -10,9 +10,9 @@ import { Logo } from "./index";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Entrar — WEPIC AI" },
-      { name: "description", content: "Acesse o painel do seu restaurante no WEPIC AI." },
-      { property: "og:title", content: "Entrar — WEPIC AI" },
+      { title: "Entrar — WALPIC AI" },
+      { name: "description", content: "Acesse o painel do seu restaurante no WALPIC AI." },
+      { property: "og:title", content: "Entrar — WALPIC AI" },
       { property: "og:description", content: "Acesse o painel do seu restaurante." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

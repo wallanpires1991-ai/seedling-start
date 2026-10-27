@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Logo } from "../index";
 
 export const Route = createFileRoute("/_authenticated/app")({
-  head: () => ({ meta: [{ title: "Painel — WEPIC AI" }, { name: "description", content: "Painel do restaurante." }] }),
+  head: () => ({ meta: [{ title: "Painel — WALPIC AI" }, { name: "description", content: "Painel do restaurante." }] }),
   component: AppLayout,
 });
 
