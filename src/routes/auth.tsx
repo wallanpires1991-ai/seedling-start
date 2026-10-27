@@ -10,9 +10,9 @@ import { Logo } from "./index";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Entrar — AtendeChef AI" },
-      { name: "description", content: "Acesse o painel do seu restaurante no AtendeChef AI." },
-      { property: "og:title", content: "Entrar — AtendeChef AI" },
+      { title: "Entrar — WEPIC AI" },
+      { name: "description", content: "Acesse o painel do seu restaurante no WEPIC AI." },
+      { property: "og:title", content: "Entrar — WEPIC AI" },
       { property: "og:description", content: "Acesse o painel do seu restaurante." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

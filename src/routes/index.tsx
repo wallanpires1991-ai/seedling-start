@@ -65,9 +65,12 @@ function Landing() {
 
 export function Logo() {
   return (
-    <div className="flex items-center gap-2 font-display text-lg font-bold">
-      <span className="grid size-9 place-items-center rounded-xl bg-brand-gradient text-primary-foreground shadow-glow"><ShoppingBag className="size-5" /></span>
-      AtendeChef <span className="text-primary-glow">AI</span>
+    <div className="flex items-center gap-2">
+      <Cat className="size-8 text-primary-glow" strokeWidth={2.2} />
+      <div className="flex flex-col leading-none">
+        <span className="font-display text-lg font-bold tracking-wide">WEPIC <span className="text-primary-glow">AI</span></span>
+        <span className="mt-0.5 text-[9px] font-medium tracking-[0.2em] text-muted-foreground">POWERED BY WPC</span>
+      </div>
     </div>
   );
 }

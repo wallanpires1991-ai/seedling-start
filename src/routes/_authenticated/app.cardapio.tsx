@@ -14,7 +14,7 @@ import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/_authenticated/app/cardapio")({
-  head: () => ({ meta: [{ title: "Cardápio — AtendeChef AI" }, { name: "description", content: "Gerencie produtos e adicionais." }] }),
+  head: () => ({ meta: [{ title: "Cardápio — WEPIC AI" }, { name: "description", content: "Gerencie produtos e adicionais." }] }),
   component: Cardapio,
 });
 
