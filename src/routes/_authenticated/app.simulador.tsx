@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/_authenticated/app/simulador")({
-  head: () => ({ meta: [{ title: "Treinar minha IA — WEPIC AI" }, { name: "description", content: "Converse com sua IA antes de conectar o WhatsApp." }] }),
+  head: () => ({ meta: [{ title: "Treinar minha IA — WALPIC AI" }, { name: "description", content: "Converse com sua IA antes de conectar o WhatsApp." }] }),
   component: Simulador,
 });
 

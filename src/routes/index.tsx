@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "AtendeChef AI — IA que atende e vende pelo WhatsApp" },
+      { title: "WALPIC AI — IA que atende e vende pelo WhatsApp" },
       { name: "description", content: "Atendimento inteligente para restaurantes, hamburguerias e delivery: cardápio, pedidos, cozinha e IA treinada no seu negócio." },
-      { property: "og:title", content: "AtendeChef AI — IA que atende e vende pelo WhatsApp" },
+      { property: "og:title", content: "WALPIC AI — IA que atende e vende pelo WhatsApp" },
       { property: "og:description", content: "Cardápio, pedidos, cozinha e uma IA treinada no seu restaurante." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -58,7 +58,7 @@ function Landing() {
           </div>
         ))}
       </section>
-      <footer className="border-t py-8 text-center text-sm text-muted-foreground">© 2026 AtendeChef AI</footer>
+      <footer className="border-t py-8 text-center text-sm text-muted-foreground">© 2026 WALPIC AI</footer>
     </div>
   );
 }
@@ -68,8 +68,7 @@ export function Logo() {
     <div className="flex items-center gap-2">
       <Cat className="size-8 text-primary-glow" strokeWidth={2.2} />
       <div className="flex flex-col leading-none">
-        <span className="font-display text-lg font-bold tracking-wide">WEPIC <span className="text-primary-glow">AI</span></span>
-        <span className="mt-0.5 text-[9px] font-medium tracking-[0.2em] text-muted-foreground">POWERED BY WPC</span>
+        <span className="font-display text-lg font-bold tracking-wide">WALPIC <span className="text-primary-glow">AI</span></span>
       </div>
     </div>
   );

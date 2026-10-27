@@ -4,7 +4,7 @@ import { useEst } from "@/lib/establishment";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/app/whatsapp")({
-  head: () => ({ meta: [{ title: "Conectar WhatsApp — WEPIC AI" }, { name: "description", content: "Status da conexão com o WhatsApp Business." }] }),
+  head: () => ({ meta: [{ title: "Conectar WhatsApp — WALPIC AI" }, { name: "description", content: "Status da conexão com o WhatsApp Business." }] }),
   component: WhatsApp,
 });
 
