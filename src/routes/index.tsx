@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChefHat, MessageCircle, ShoppingBag, Utensils, ShieldCheck, Sparkles } from "lucide-react";
+import { Cat, ChefHat, MessageCircle, ShoppingBag, Utensils, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
