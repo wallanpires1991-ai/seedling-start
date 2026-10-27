@@ -10,33 +10,143 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
+import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
+import { Route as AuthenticatedAppCardapioRouteImport } from './routes/_authenticated/app.cardapio'
+import { Route as AuthenticatedAppCozinhaRouteImport } from './routes/_authenticated/app.cozinha'
+import { Route as AuthenticatedAppPedidosRouteImport } from './routes/_authenticated/app.pedidos'
+import { Route as AuthenticatedAppSimuladorRouteImport } from './routes/_authenticated/app.simulador'
+import { Route as AuthenticatedAppWhatsappRouteImport } from './routes/_authenticated/app.whatsapp'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
+const AuthenticatedAppCardapioRoute =
+  AuthenticatedAppCardapioRouteImport.update({
+    id: '/cardapio',
+    path: '/cardapio',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppCozinhaRoute = AuthenticatedAppCozinhaRouteImport.update({
+  id: '/cozinha',
+  path: '/cozinha',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
+const AuthenticatedAppPedidosRoute = AuthenticatedAppPedidosRouteImport.update({
+  id: '/pedidos',
+  path: '/pedidos',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
+const AuthenticatedAppSimuladorRoute =
+  AuthenticatedAppSimuladorRouteImport.update({
+    id: '/simulador',
+    path: '/simulador',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppWhatsappRoute =
+  AuthenticatedAppWhatsappRouteImport.update({
+    id: '/whatsapp',
+    path: '/whatsapp',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/app': typeof AuthenticatedAppRouteWithChildren
+  '/app/cardapio': typeof AuthenticatedAppCardapioRoute
+  '/app/cozinha': typeof AuthenticatedAppCozinhaRoute
+  '/app/pedidos': typeof AuthenticatedAppPedidosRoute
+  '/app/simulador': typeof AuthenticatedAppSimuladorRoute
+  '/app/whatsapp': typeof AuthenticatedAppWhatsappRoute
+  '/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/app/cardapio': typeof AuthenticatedAppCardapioRoute
+  '/app/cozinha': typeof AuthenticatedAppCozinhaRoute
+  '/app/pedidos': typeof AuthenticatedAppPedidosRoute
+  '/app/simulador': typeof AuthenticatedAppSimuladorRoute
+  '/app/whatsapp': typeof AuthenticatedAppWhatsappRoute
+  '/app': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
+  '/_authenticated/app/cardapio': typeof AuthenticatedAppCardapioRoute
+  '/_authenticated/app/cozinha': typeof AuthenticatedAppCozinhaRoute
+  '/_authenticated/app/pedidos': typeof AuthenticatedAppPedidosRoute
+  '/_authenticated/app/simulador': typeof AuthenticatedAppSimuladorRoute
+  '/_authenticated/app/whatsapp': typeof AuthenticatedAppWhatsappRoute
+  '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/app'
+    | '/app/cardapio'
+    | '/app/cozinha'
+    | '/app/pedidos'
+    | '/app/simulador'
+    | '/app/whatsapp'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/app/cardapio'
+    | '/app/cozinha'
+    | '/app/pedidos'
+    | '/app/simulador'
+    | '/app/whatsapp'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/app'
+    | '/_authenticated/app/cardapio'
+    | '/_authenticated/app/cozinha'
+    | '/_authenticated/app/pedidos'
+    | '/_authenticated/app/simulador'
+    | '/_authenticated/app/whatsapp'
+    | '/_authenticated/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +158,108 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/app': {
+      id: '/_authenticated/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AuthenticatedAppRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/app/': {
+      id: '/_authenticated/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/cardapio': {
+      id: '/_authenticated/app/cardapio'
+      path: '/cardapio'
+      fullPath: '/app/cardapio'
+      preLoaderRoute: typeof AuthenticatedAppCardapioRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/cozinha': {
+      id: '/_authenticated/app/cozinha'
+      path: '/cozinha'
+      fullPath: '/app/cozinha'
+      preLoaderRoute: typeof AuthenticatedAppCozinhaRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/pedidos': {
+      id: '/_authenticated/app/pedidos'
+      path: '/pedidos'
+      fullPath: '/app/pedidos'
+      preLoaderRoute: typeof AuthenticatedAppPedidosRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/simulador': {
+      id: '/_authenticated/app/simulador'
+      path: '/simulador'
+      fullPath: '/app/simulador'
+      preLoaderRoute: typeof AuthenticatedAppSimuladorRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/whatsapp': {
+      id: '/_authenticated/app/whatsapp'
+      path: '/whatsapp'
+      fullPath: '/app/whatsapp'
+      preLoaderRoute: typeof AuthenticatedAppWhatsappRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
   }
 }
 
+interface AuthenticatedAppRouteChildren {
+  AuthenticatedAppCardapioRoute: typeof AuthenticatedAppCardapioRoute
+  AuthenticatedAppCozinhaRoute: typeof AuthenticatedAppCozinhaRoute
+  AuthenticatedAppPedidosRoute: typeof AuthenticatedAppPedidosRoute
+  AuthenticatedAppSimuladorRoute: typeof AuthenticatedAppSimuladorRoute
+  AuthenticatedAppWhatsappRoute: typeof AuthenticatedAppWhatsappRoute
+  AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
+}
+
+const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
+  AuthenticatedAppCardapioRoute: AuthenticatedAppCardapioRoute,
+  AuthenticatedAppCozinhaRoute: AuthenticatedAppCozinhaRoute,
+  AuthenticatedAppPedidosRoute: AuthenticatedAppPedidosRoute,
+  AuthenticatedAppSimuladorRoute: AuthenticatedAppSimuladorRoute,
+  AuthenticatedAppWhatsappRoute: AuthenticatedAppWhatsappRoute,
+  AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
+}
+
+const AuthenticatedAppRouteWithChildren =
+  AuthenticatedAppRoute._addFileChildren(AuthenticatedAppRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
