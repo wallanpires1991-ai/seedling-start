@@ -7,7 +7,7 @@ import { brl } from "@/lib/pricing";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/app/pedidos")({
-  head: () => ({ meta: [{ title: "Pedidos — AtendeChef AI" }, { name: "description", content: "Painel Kanban de pedidos." }] }),
+  head: () => ({ meta: [{ title: "Pedidos — WEPIC AI" }, { name: "description", content: "Painel Kanban de pedidos." }] }),
   component: Pedidos,
 });
 

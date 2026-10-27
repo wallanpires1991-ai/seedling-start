@@ -8,7 +8,7 @@ import { useOrders, setOrderStatus } from "@/lib/useOrders";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/app/cozinha")({
-  head: () => ({ meta: [{ title: "Cozinha (KDS) — AtendeChef AI" }, { name: "description", content: "Tela de comandas para a cozinha." }] }),
+  head: () => ({ meta: [{ title: "Cozinha (KDS) — WEPIC AI" }, { name: "description", content: "Tela de comandas para a cozinha." }] }),
   component: Cozinha,
 });
 

@@ -8,7 +8,7 @@ import { brl } from "@/lib/pricing";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/app/")({
-  head: () => ({ meta: [{ title: "Dashboard — AtendeChef AI" }, { name: "description", content: "Resumo do dia do restaurante." }] }),
+  head: () => ({ meta: [{ title: "Dashboard — WEPIC AI" }, { name: "description", content: "Resumo do dia do restaurante." }] }),
   component: Dashboard,
 });
 
