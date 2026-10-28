@@ -66,7 +66,7 @@ function Landing() {
 export function Logo() {
   return (
     <div className="flex items-center gap-2">
-      <Cat className="size-8 text-primary-glow" strokeWidth={2.2} />
+      <Cat className="size-8 text-brand-purple" strokeWidth={2.2} />
       <div className="flex flex-col leading-none">
         <span className="font-display text-lg font-bold tracking-wide">WALPIC <span className="text-primary-glow">AI</span></span>
       </div>
