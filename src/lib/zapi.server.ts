@@ -18,7 +18,7 @@ export async function zapi<T = unknown>(path: string, init?: { method?: string; 
   const res = await fetch(`${base}/${path}`, {
     method: init?.method ?? "GET",
     headers: { "Client-Token": client, "Content-Type": "application/json" },
-    body: init?.body ? JSON.stringify(init.body) : undefined,
+    body: init?.body ? JSON.stringify(init.body) : null,
   });
   const text = await res.text();
   if (!res.ok) throw new Error(`Z-API ${path} falhou [${res.status}]: ${text.slice(0, 300)}`);
