@@ -55,6 +55,7 @@
   --color-warning-foreground: var(--warning-foreground);
   --color-success: var(--success);
   --color-primary-glow: var(--primary-glow);
+  --color-brand-purple: var(--brand-purple);
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
   --color-sidebar: var(--sidebar);
@@ -78,6 +79,7 @@
   --primary: oklch(0.52 0.14 155);
   --primary-foreground: oklch(0.99 0.01 150);
   --primary-glow: oklch(0.72 0.17 150);
+  --brand-purple: oklch(0.6 0.22 300);
   --secondary: oklch(0.95 0.02 140);
   --secondary-foreground: oklch(0.25 0.05 160);
   --muted: oklch(0.955 0.01 130);
