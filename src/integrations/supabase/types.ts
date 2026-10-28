@@ -98,6 +98,8 @@ export type Database = {
           phone: string | null
           prep_minutes: number
           welcome_message: string
+          whatsapp_instance_id: string | null
+          whatsapp_phone: string | null
           whatsapp_status: string
         }
         Insert: {
@@ -116,6 +118,8 @@ export type Database = {
           phone?: string | null
           prep_minutes?: number
           welcome_message?: string
+          whatsapp_instance_id?: string | null
+          whatsapp_phone?: string | null
           whatsapp_status?: string
         }
         Update: {
@@ -134,6 +138,8 @@ export type Database = {
           phone?: string | null
           prep_minutes?: number
           welcome_message?: string
+          whatsapp_instance_id?: string | null
+          whatsapp_phone?: string | null
           whatsapp_status?: string
         }
         Relationships: []
@@ -440,6 +446,72 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      whatsapp_conversations: {
+        Row: {
+          customer_name: string | null
+          establishment_id: string
+          handoff: boolean
+          id: string
+          last_order_id: string | null
+          messages: Json
+          phone: string
+          session: number
+          updated_at: string
+        }
+        Insert: {
+          customer_name?: string | null
+          establishment_id: string
+          handoff?: boolean
+          id?: string
+          last_order_id?: string | null
+          messages?: Json
+          phone: string
+          session?: number
+          updated_at?: string
+        }
+        Update: {
+          customer_name?: string | null
+          establishment_id?: string
+          handoff?: boolean
+          id?: string
+          last_order_id?: string | null
+          messages?: Json
+          phone?: string
+          session?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      whatsapp_webhook_events: {
+        Row: {
+          establishment_id: string | null
+          id: string
+          message_id: string
+          payload: Json
+          processed_at: string | null
+          processing_error: string | null
+          received_at: string
+        }
+        Insert: {
+          establishment_id?: string | null
+          id?: string
+          message_id: string
+          payload: Json
+          processed_at?: string | null
+          processing_error?: string | null
+          received_at?: string
+        }
+        Update: {
+          establishment_id?: string | null
+          id?: string
+          message_id?: string
+          payload?: Json
+          processed_at?: string | null
+          processing_error?: string | null
+          received_at?: string
         }
         Relationships: []
       }
