@@ -19,6 +19,7 @@ import { Route as AuthenticatedAppCozinhaRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAppPedidosRouteImport } from './routes/_authenticated/app.pedidos'
 import { Route as AuthenticatedAppSimuladorRouteImport } from './routes/_authenticated/app.simulador'
 import { Route as AuthenticatedAppWhatsappRouteImport } from './routes/_authenticated/app.whatsapp'
+import { Route as ApiPublicZapiWebhookRouteImport } from './routes/api/public/zapi/webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -72,6 +73,11 @@ const AuthenticatedAppWhatsappRoute =
     path: '/whatsapp',
     getParentRoute: () => AuthenticatedAppRoute,
   } as any)
+const ApiPublicZapiWebhookRoute = ApiPublicZapiWebhookRouteImport.update({
+  id: '/api/public/zapi/webhook',
+  path: '/api/public/zapi/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/app/simulador': typeof AuthenticatedAppSimuladorRoute
   '/app/whatsapp': typeof AuthenticatedAppWhatsappRoute
   '/app/': typeof AuthenticatedAppIndexRoute
+  '/api/public/zapi/webhook': typeof ApiPublicZapiWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/app/simulador': typeof AuthenticatedAppSimuladorRoute
   '/app/whatsapp': typeof AuthenticatedAppWhatsappRoute
   '/app': typeof AuthenticatedAppIndexRoute
+  '/api/public/zapi/webhook': typeof ApiPublicZapiWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/_authenticated/app/simulador': typeof AuthenticatedAppSimuladorRoute
   '/_authenticated/app/whatsapp': typeof AuthenticatedAppWhatsappRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
+  '/api/public/zapi/webhook': typeof ApiPublicZapiWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/app/simulador'
     | '/app/whatsapp'
     | '/app/'
+    | '/api/public/zapi/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/app/simulador'
     | '/app/whatsapp'
     | '/app'
+    | '/api/public/zapi/webhook'
   id:
     | '__root__'
     | '/'
@@ -141,12 +152,14 @@ export interface FileRouteTypes {
     | '/_authenticated/app/simulador'
     | '/_authenticated/app/whatsapp'
     | '/_authenticated/app/'
+    | '/api/public/zapi/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ApiPublicZapiWebhookRoute: typeof ApiPublicZapiWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -221,6 +234,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppWhatsappRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/api/public/zapi/webhook': {
+      id: '/api/public/zapi/webhook'
+      path: '/api/public/zapi/webhook'
+      fullPath: '/api/public/zapi/webhook'
+      preLoaderRoute: typeof ApiPublicZapiWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -260,6 +280,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  ApiPublicZapiWebhookRoute: ApiPublicZapiWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
