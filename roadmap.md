@@ -1,7 +1,8 @@
 # Roadmap
 
 ## Em aberto
-- [ ] Evolução conforme novo prompt: preservar identidade e dados; apresentar plano das nove fases e iniciar apenas a auditoria após aprovação.
+- [x] Auditoria inicial da evolução: painel autenticado, quatro testes, RLS e estrutura de pedidos conferidos; dados preservados.
+- [ ] Fase 1 da evolução: corrigir isolamento, preços, permissões e confiabilidade; aguarda aprovação do plano.
 - [x] Renomear a marca para WALPIC AI em todo o app, mantendo a logo do gato e removendo "POWERED BY WPC" (feito em 27/10/2026).
 - [ ] Conectar WhatsApp real (aguarda credenciais/número do usuário; nunca simular conexão).
 - [ ] Integrações reais de pagamentos e impressão (pendentes).
