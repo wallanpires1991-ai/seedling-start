@@ -22,8 +22,20 @@ describe("computeCart", () => {
     expect(r.lines).toHaveLength(0);
     expect(r.rejected).toEqual(["p2", "zzz"]);
   });
-  it("ignores modifiers from other products and charges no fee on pickup", () => {
+  it("rejects modifiers from other products", () => {
     const r = computeCart([{ product_id: "p1", qty: 1, modifier_ids: ["m2"] }], products, modifiers, "pickup", 6);
-    expect(r.total).toBe(29.9);
+    expect(r.lines).toHaveLength(0);
+    expect(r.rejected).toEqual(["p1"]);
+  });
+  it("does not charge delivery for pickup", () => {
+    expect(computeCart([{ product_id: "p1", qty: 1 }], products, modifiers, "pickup", 6).total).toBe(29.9);
+  });
+  it("rejects duplicated paid additions", () => {
+    const r = computeCart([{ product_id: "p1", qty: 1, modifier_ids: ["m1", "m1"] }], products, modifiers, "pickup", 6);
+    expect(r.lines).toHaveLength(0);
+    expect(r.rejected).toEqual(["p1"]);
+  });
+  it.each([0, -1, 1.5, 51, NaN])("rejects invalid quantity %s", (qty) => {
+    expect(computeCart([{ product_id: "p1", qty }], products, modifiers, "pickup", 6).rejected).toEqual(["p1"]);
   });
 });

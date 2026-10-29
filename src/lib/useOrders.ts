@@ -2,11 +2,13 @@ import { useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import type { Database } from "@/integrations/supabase/types";
 
 export function useOrders(estId: string) {
   const qc = useQueryClient();
   const q = useQuery({
     queryKey: ["orders", estId],
+    refetchInterval: 10000,
     queryFn: async () => {
       const since = new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString();
       const { data, error } = await supabase
@@ -32,6 +34,6 @@ export function useOrders(estId: string) {
 }
 
 export async function setOrderStatus(id: string, status: string) {
-  const { error } = await supabase.from("orders").update({ status: status as never }).eq("id", id);
+  const { error } = await supabase.rpc("transition_order", { _id: id, _status: status as Database["public"]["Enums"]["order_status"] });
   if (error) toast.error(error.message);
 }

@@ -29,11 +29,22 @@ export function computeCart(
       rejected.push(it.product_id);
       continue;
     }
-    const qty = Math.max(1, Math.min(50, Math.floor(Number(it.qty) || 1)));
-    const mods = (it.modifier_ids ?? [])
+    const qty = it.qty;
+    const ids = it.modifier_ids ?? [];
+    if (!Number.isInteger(qty) || qty < 1 || qty > 50 || new Set(ids).size !== ids.length ||
+      ids.some((id) => !modifiers.some((m) => m.id === id && m.product_id === p.id)) ||
+      !Number.isFinite(p.price) || p.price < 0) {
+      rejected.push(it.product_id);
+      continue;
+    }
+    const mods = ids
       .map((id) => modifiers.find((m) => m.id === id && m.product_id === p.id))
       .filter((m): m is MenuModifier => !!m)
       .map((m) => ({ id: m.id, name: m.name, price: Number(m.price) }));
+    if (mods.some((m) => !Number.isFinite(m.price) || m.price < 0)) {
+      rejected.push(it.product_id);
+      continue;
+    }
     const unit = round(Number(p.price) + mods.reduce((s, m) => s + m.price, 0));
     lines.push({
       product_id: p.id,

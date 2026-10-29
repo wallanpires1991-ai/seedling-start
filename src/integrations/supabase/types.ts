@@ -295,6 +295,7 @@ export type Database = {
           notes: string | null
           payment_method: string
           payment_status: string
+          request_key: string | null
           source: string
           status: Database["public"]["Enums"]["order_status"]
           subtotal: number
@@ -316,6 +317,7 @@ export type Database = {
           notes?: string | null
           payment_method?: string
           payment_status?: string
+          request_key?: string | null
           source?: string
           status?: Database["public"]["Enums"]["order_status"]
           subtotal?: number
@@ -337,6 +339,7 @@ export type Database = {
           notes?: string | null
           payment_method?: string
           payment_status?: string
+          request_key?: string | null
           source?: string
           status?: Database["public"]["Enums"]["order_status"]
           subtotal?: number
@@ -487,30 +490,54 @@ export type Database = {
       }
       whatsapp_webhook_events: {
         Row: {
+          attempts: number
+          checkpoint: Json
+          claim_token: string | null
           establishment_id: string | null
           id: string
+          lease_until: string | null
           message_id: string
+          next_attempt_at: string
           payload: Json
+          phone: string | null
           processed_at: string | null
           processing_error: string | null
+          processing_state: string
+          provider_message_id: string | null
           received_at: string
         }
         Insert: {
+          attempts?: number
+          checkpoint?: Json
+          claim_token?: string | null
           establishment_id?: string | null
           id?: string
+          lease_until?: string | null
           message_id: string
+          next_attempt_at?: string
           payload: Json
+          phone?: string | null
           processed_at?: string | null
           processing_error?: string | null
+          processing_state?: string
+          provider_message_id?: string | null
           received_at?: string
         }
         Update: {
+          attempts?: number
+          checkpoint?: Json
+          claim_token?: string | null
           establishment_id?: string | null
           id?: string
+          lease_until?: string | null
           message_id?: string
+          next_attempt_at?: string
           payload?: Json
+          phone?: string | null
           processed_at?: string | null
           processing_error?: string | null
+          processing_state?: string
+          provider_message_id?: string | null
           received_at?: string
         }
         Relationships: []
@@ -520,7 +547,58 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      claim_zapi_events: {
+        Args: { _limit?: number }
+        Returns: {
+          attempts: number
+          checkpoint: Json
+          claim_token: string | null
+          establishment_id: string | null
+          id: string
+          lease_until: string | null
+          message_id: string
+          next_attempt_at: string
+          payload: Json
+          phone: string | null
+          processed_at: string | null
+          processing_error: string | null
+          processing_state: string
+          provider_message_id: string | null
+          received_at: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "whatsapp_webhook_events"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      complete_zapi_event: {
+        Args: {
+          _conversation: string
+          _event: string
+          _handoff: boolean
+          _messages: Json
+          _name: string
+          _order: string
+          _session: number
+        }
+        Returns: undefined
+      }
       create_establishment: { Args: { _name: string }; Returns: string }
+      finish_zapi_event: {
+        Args: {
+          _claim: string
+          _conversation: string
+          _event: string
+          _handoff: boolean
+          _messages: Json
+          _name: string
+          _order: string
+          _session: number
+        }
+        Returns: undefined
+      }
       has_est_role: {
         Args: {
           _est: string
@@ -552,6 +630,17 @@ export type Database = {
           _source?: string
         }
         Returns: string
+      }
+      save_zapi_checkpoint: {
+        Args: { _checkpoint: Json; _claim: string; _event: string }
+        Returns: undefined
+      }
+      transition_order: {
+        Args: {
+          _id: string
+          _status: Database["public"]["Enums"]["order_status"]
+        }
+        Returns: undefined
       }
     }
     Enums: {

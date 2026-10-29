@@ -1,3 +1,4 @@
+import { pageMeta } from "@/lib/metadata";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
@@ -9,7 +10,7 @@ import { whatsappAction } from "@/lib/whatsapp.functions";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/app/whatsapp")({
-  head: () => ({ meta: [{ title: "Conectar WhatsApp — WALPIC AI" }, { name: "description", content: "Conecte o WhatsApp do restaurante por QR code." }] }),
+  head: () => ({ meta: pageMeta("Conectar WhatsApp — WALPIC AI", "Conecte o WhatsApp do restaurante por QR code.") }),
   component: WhatsApp,
 });
 

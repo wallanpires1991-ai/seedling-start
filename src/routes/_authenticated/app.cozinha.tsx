@@ -1,3 +1,4 @@
+import { pageMeta } from "@/lib/metadata";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -8,7 +9,7 @@ import { useOrders, setOrderStatus } from "@/lib/useOrders";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/app/cozinha")({
-  head: () => ({ meta: [{ title: "Cozinha (KDS) — WALPIC AI" }, { name: "description", content: "Tela de comandas para a cozinha." }] }),
+  head: () => ({ meta: pageMeta("Cozinha (KDS) — WALPIC AI", "Tela de comandas para a cozinha.") }),
   component: Cozinha,
 });
 

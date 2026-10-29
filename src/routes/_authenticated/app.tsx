@@ -1,3 +1,4 @@
+import { pageMeta } from "@/lib/metadata";
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -10,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Logo } from "../index";
 
 export const Route = createFileRoute("/_authenticated/app")({
-  head: () => ({ meta: [{ title: "Painel — WALPIC AI" }, { name: "description", content: "Painel do restaurante." }] }),
+  head: () => ({ meta: pageMeta("Painel — WALPIC AI", "Painel do restaurante.") }),
   component: AppLayout,
 });
 

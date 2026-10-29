@@ -15,6 +15,20 @@
       "when": 1793153289750,
       "tag": "0001_whatsapp_zapi",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793293313612,
+      "tag": "0002_secure_orders_and_durable_zapi_processing",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1793293842419,
+      "tag": "0003_fence_message_processing_leases",
+      "breakpoints": true
     }
   ]
 }

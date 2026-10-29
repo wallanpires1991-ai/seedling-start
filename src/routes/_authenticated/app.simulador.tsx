@@ -1,3 +1,4 @@
+import { pageMeta } from "@/lib/metadata";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useRef, useState, useEffect } from "react";
@@ -12,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/_authenticated/app/simulador")({
-  head: () => ({ meta: [{ title: "Treinar minha IA — WALPIC AI" }, { name: "description", content: "Converse com sua IA antes de conectar o WhatsApp." }] }),
+  head: () => ({ meta: pageMeta("Treinar minha IA — WALPIC AI", "Converse com sua IA antes de conectar o WhatsApp.") }),
   component: Simulador,
 });
 
@@ -30,6 +31,7 @@ function Simulador() {
   const [cartInput, setCartInput] = useState<CartInput[]>([]);
   const [meta, setMeta] = useState<{ fulfillment: string; address: string; customerName: string; ready: boolean; handoff: boolean; unanswered: string[]; used: string[] }>({ fulfillment: "unknown", address: "", customerName: "", ready: false, handoff: false, unanswered: [], used: [] });
   const [placed, setPlaced] = useState<number | null>(null);
+  const [placing, setPlacing] = useState(false);
   const [sessionKey, setSessionKey] = useState(() => crypto.randomUUID());
   const endRef = useRef<HTMLDivElement>(null);
   useEffect(() => endRef.current?.scrollIntoView({ behavior: "smooth" }), [msgs, busy]);
@@ -56,15 +58,20 @@ function Simulador() {
   }
 
   async function confirmOrder() {
+    if (!meta.ready || placing || placed || meta.handoff) return;
+    setPlacing(true);
+    try {
     const { data, error } = await supabase.rpc("place_order", {
       _est: est.id, _items: cartInput, _customer_name: meta.customerName || "Cliente teste", _customer_phone: "",
       _fulfillment: meta.fulfillment === "pickup" ? "pickup" : "delivery", _address: meta.address, _payment_method: "on_delivery",
-      _is_test: true, _idempotency_key: "sim-" + sessionKey, _source: "simulator",
+      _is_test: true, _idempotency_key: `sim-${est.id}-${sessionKey}`, _source: "simulator",
     });
     if (error) { toast.error(error.message); return; }
-    const { data: o } = await supabase.from("orders").select("code").eq("id", data).single();
+    const { data: o, error: readError } = await supabase.from("orders").select("code").eq("id", data).eq("establishment_id", est.id).single();
+    if (readError) { toast.error("Pedido salvo, mas não foi possível ler a confirmação. Confira em Pedidos."); return; }
     setPlaced(o?.code ?? null);
     toast.success("Pedido de teste enviado para a cozinha!");
+    } finally { setPlacing(false); }
   }
 
   function reset() {
@@ -140,7 +147,7 @@ function Simulador() {
                 <Link to="/app/cozinha" className="mt-1 inline-block text-xs underline">Ver na cozinha →</Link>
               </div>
             ) : (
-              <Button className="mt-4 w-full" variant="hero" disabled={!meta.ready} onClick={confirmOrder}>
+              <Button className="mt-4 w-full" variant="hero" disabled={!meta.ready || placing || meta.handoff} onClick={confirmOrder}>
                 <FlaskConical className="size-4" />Enviar pedido de teste
               </Button>
             )}
