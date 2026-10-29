@@ -1,6 +1,7 @@
 # WALPIC AI — auditoria e primeira fase
 
 ## Verificado
+- Bateria final: 22 testes passaram em quatro arquivos, incluindo oito verificações autenticadas e três testes de recuperação/pausa de mensagens.
 - Navegação autenticada: painel, cardápio, simulador, pedidos e cozinha sem erros de execução observados.
 - IA real: conversa com dois X-Burger Clássico, confirmação explícita, pedido de teste #1002 salvo e lido na cozinha. Não houve envio real pelo WhatsApp.
 - Testes de cálculo: preços de cardápio, retirada sem taxa, produtos indisponíveis, adicionais inválidos/repetidos e quantidade.
