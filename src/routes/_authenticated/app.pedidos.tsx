@@ -1,3 +1,4 @@
+import { pageMeta } from "@/lib/metadata";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, X } from "lucide-react";
@@ -7,7 +8,7 @@ import { brl } from "@/lib/pricing";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/app/pedidos")({
-  head: () => ({ meta: [{ title: "Pedidos — WALPIC AI" }, { name: "description", content: "Painel Kanban de pedidos." }] }),
+  head: () => ({ meta: pageMeta("Pedidos — WALPIC AI", "Painel Kanban de pedidos.") }),
   component: Pedidos,
 });
 

@@ -1,3 +1,4 @@
+import { pageMeta } from "@/lib/metadata";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -14,7 +15,7 @@ import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/_authenticated/app/cardapio")({
-  head: () => ({ meta: [{ title: "Cardápio — WALPIC AI" }, { name: "description", content: "Gerencie produtos e adicionais." }] }),
+  head: () => ({ meta: pageMeta("Cardápio — WALPIC AI", "Gerencie produtos e adicionais.") }),
   component: Cardapio,
 });
 

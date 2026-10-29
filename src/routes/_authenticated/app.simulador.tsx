@@ -1,3 +1,4 @@
+import { pageMeta } from "@/lib/metadata";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useRef, useState, useEffect } from "react";
@@ -12,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/_authenticated/app/simulador")({
-  head: () => ({ meta: [{ title: "Treinar minha IA — WALPIC AI" }, { name: "description", content: "Converse com sua IA antes de conectar o WhatsApp." }] }),
+  head: () => ({ meta: pageMeta("Treinar minha IA — WALPIC AI", "Converse com sua IA antes de conectar o WhatsApp.") }),
   component: Simulador,
 });
 

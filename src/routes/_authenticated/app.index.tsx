@@ -1,3 +1,4 @@
+import { pageMeta } from "@/lib/metadata";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
@@ -8,7 +9,7 @@ import { brl } from "@/lib/pricing";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/app/")({
-  head: () => ({ meta: [{ title: "Dashboard — WALPIC AI" }, { name: "description", content: "Resumo do dia do restaurante." }] }),
+  head: () => ({ meta: pageMeta("Dashboard — WALPIC AI", "Resumo do dia do restaurante.") }),
   component: Dashboard,
 });
 
