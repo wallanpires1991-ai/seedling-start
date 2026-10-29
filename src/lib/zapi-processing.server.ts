@@ -17,9 +17,11 @@ export async function recoverZapiEvents(db: SupabaseClient<Database>) {
 }
 
 async function processEvent(db: SupabaseClient<Database>, event: Event) {
+  const claim = event.claim_token;
+  if (!claim) throw new Error("Evento sem reserva");
   const cp = (event.checkpoint ?? {}) as Checkpoint;
   const save = async () => {
-    const { error } = await db.from("whatsapp_webhook_events").update({ checkpoint: cp as unknown as Json }).eq("id", event.id);
+    const { error } = await db.rpc("save_zapi_checkpoint", { _event: event.id, _claim: claim, _checkpoint: cp as unknown as Json });
     if (error) throw error;
   };
   const send = async (kind: "reply" | "confirmation", phone: string, body: string) => {
@@ -49,7 +51,7 @@ async function processEvent(db: SupabaseClient<Database>, event: Event) {
     const messages = cp.messages ?? [...((conv.messages ?? []) as Msg[]), { role: "user" as const, content: payload.text.message.slice(0, 2000) }].slice(-30);
     // Preserve inbound history but stop automation immediately during human takeover.
     if (conv.handoff || !est.automation_active) {
-      const { error: doneError } = await db.rpc("complete_zapi_event", { _event: event.id, _conversation: conv.id, _messages: messages as Json, _session: conv.session, _order: conv.last_order_id ?? null as unknown as string, _handoff: conv.handoff, _name: conv.customer_name ?? "" });
+      const { error: doneError } = await db.rpc("finish_zapi_event", { _event: event.id, _claim: claim, _conversation: conv.id, _messages: messages as Json, _session: conv.session, _order: conv.last_order_id ?? null as unknown as string, _handoff: conv.handoff, _name: conv.customer_name ?? "" });
       if (doneError) throw doneError;
       return;
     }
@@ -84,8 +86,8 @@ async function processEvent(db: SupabaseClient<Database>, event: Event) {
       order = orderId;
       updated = [];
     }
-    const { error: doneError } = await db.rpc("complete_zapi_event", {
-      _event: event.id, _conversation: conv.id, _messages: updated as Json, _session: session,
+    const { error: doneError } = await db.rpc("finish_zapi_event", {
+      _event: event.id, _claim: claim, _conversation: conv.id, _messages: updated as Json, _session: session,
       _order: order ?? null as unknown as string, _handoff: result.handoffHuman, _name: result.customerName,
     });
     if (doneError) throw doneError;
@@ -95,7 +97,7 @@ async function processEvent(db: SupabaseClient<Database>, event: Event) {
       checkpoint: cp as unknown as Json, processing_state: ambiguous ? "awaiting_review" : "pending",
       processing_error: ambiguous ? "Envio de resultado incerto; revisão necessária" : "Processamento incompleto; aguardando recuperação",
       lease_until: null, next_attempt_at: new Date(Date.now() + Math.min(3600000, 30000 * 2 ** Math.min(event.attempts, 7))).toISOString(),
-    }).eq("id", event.id);
+    }).eq("id", event.id).eq("claim_token", claim).eq("processing_state", "processing");
     if (writeError) throw writeError;
     // No raw provider errors or customer contents in logs.
     console.error("zapi processing pending", event.id, ambiguous ? "awaiting_review" : "retryable");
