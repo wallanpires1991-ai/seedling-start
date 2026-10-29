@@ -49,7 +49,7 @@ async function processEvent(db: SupabaseClient<Database>, event: Event) {
     const messages = cp.messages ?? [...((conv.messages ?? []) as Msg[]), { role: "user" as const, content: payload.text.message.slice(0, 2000) }].slice(-30);
     // Preserve inbound history but stop automation immediately during human takeover.
     if (conv.handoff || !est.automation_active) {
-      const { error: doneError } = await db.rpc("complete_zapi_event", { _event: event.id, _conversation: conv.id, _messages: messages as Json, _session: conv.session, _order: conv.last_order_id ?? undefined as never, _handoff: conv.handoff, _name: conv.customer_name ?? "" });
+      const { error: doneError } = await db.rpc("complete_zapi_event", { _event: event.id, _conversation: conv.id, _messages: messages as Json, _session: conv.session, _order: conv.last_order_id ?? null as unknown as string, _handoff: conv.handoff, _name: conv.customer_name ?? "" });
       if (doneError) throw doneError;
       return;
     }
@@ -86,7 +86,7 @@ async function processEvent(db: SupabaseClient<Database>, event: Event) {
     }
     const { error: doneError } = await db.rpc("complete_zapi_event", {
       _event: event.id, _conversation: conv.id, _messages: updated as Json, _session: session,
-      _order: order ?? undefined as never, _handoff: result.handoffHuman, _name: result.customerName,
+      _order: order ?? null as unknown as string, _handoff: result.handoffHuman, _name: result.customerName,
     });
     if (doneError) throw doneError;
   } catch (error) {
