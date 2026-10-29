@@ -13,6 +13,13 @@ export function zapiInstanceId() {
   return cfg().id;
 }
 
+export class ZapiError extends Error {
+  constructor(public readonly status: number) {
+    super(`Serviço de WhatsApp indisponível (${status}).`);
+    this.name = "ZapiError";
+  }
+}
+
 export async function zapi<T = unknown>(path: string, init?: { method?: string; body?: unknown }): Promise<T> {
   const { base, client } = cfg();
   const res = await fetch(`${base}/${path}`, {
@@ -21,7 +28,8 @@ export async function zapi<T = unknown>(path: string, init?: { method?: string; 
     body: init?.body ? JSON.stringify(init.body) : null,
   });
   const text = await res.text();
-  if (!res.ok) throw new Error(`Z-API ${path} falhou [${res.status}]: ${text.slice(0, 300)}`);
+  // Provider bodies can contain credentials; never retain them in errors or logs.
+  if (!res.ok) throw new ZapiError(res.status);
   try { return JSON.parse(text) as T; } catch { return text as T; }
 }
 

@@ -18,3 +18,4 @@
 - Content routes use `pageMeta` for consistent unique sharing metadata without changing visible page design.
 - Simulator orders are created with `is_test = true` and an idempotency key so test sessions never duplicate or bill.
 - External integrations (WhatsApp, payments, printing) must show explicit pending/connected states; never fake a connection.
+- WhatsApp QR sources are normalized through the browser-safe connection module; only inline PNG data is accepted to avoid credential-bearing remote URLs, and device connectivity never implies verified automated delivery.
