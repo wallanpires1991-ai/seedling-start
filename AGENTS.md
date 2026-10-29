@@ -15,5 +15,6 @@
 - AI attendant is shared in `src/lib/attendant.server.ts`, invoked by the authenticated simulator and verified messaging processor; it may only reference DB menu IDs so channels use identical pricing safeguards.
 - Order idempotency uses tenant-scoped `request_key` under an establishment row lock; staff status changes use `transition_order`, never direct order updates, to protect money and payment state.
 - Z-API events use database leases and durable send checkpoints; uncertain sends require review rather than automatic resend. Recovery runs on subsequent verified deliveries, so quiet periods delay retries.
+- Content routes use `pageMeta` for consistent unique sharing metadata without changing visible page design.
 - Simulator orders are created with `is_test = true` and an idempotency key so test sessions never duplicate or bill.
 - External integrations (WhatsApp, payments, printing) must show explicit pending/connected states; never fake a connection.
