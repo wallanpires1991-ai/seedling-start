@@ -492,6 +492,7 @@ export type Database = {
         Row: {
           attempts: number
           checkpoint: Json
+          claim_token: string | null
           establishment_id: string | null
           id: string
           lease_until: string | null
@@ -508,6 +509,7 @@ export type Database = {
         Insert: {
           attempts?: number
           checkpoint?: Json
+          claim_token?: string | null
           establishment_id?: string | null
           id?: string
           lease_until?: string | null
@@ -524,6 +526,7 @@ export type Database = {
         Update: {
           attempts?: number
           checkpoint?: Json
+          claim_token?: string | null
           establishment_id?: string | null
           id?: string
           lease_until?: string | null
@@ -549,6 +552,7 @@ export type Database = {
         Returns: {
           attempts: number
           checkpoint: Json
+          claim_token: string | null
           establishment_id: string | null
           id: string
           lease_until: string | null
@@ -582,6 +586,19 @@ export type Database = {
         Returns: undefined
       }
       create_establishment: { Args: { _name: string }; Returns: string }
+      finish_zapi_event: {
+        Args: {
+          _claim: string
+          _conversation: string
+          _event: string
+          _handoff: boolean
+          _messages: Json
+          _name: string
+          _order: string
+          _session: number
+        }
+        Returns: undefined
+      }
       has_est_role: {
         Args: {
           _est: string
@@ -613,6 +630,10 @@ export type Database = {
           _source?: string
         }
         Returns: string
+      }
+      save_zapi_checkpoint: {
+        Args: { _checkpoint: Json; _claim: string; _event: string }
+        Returns: undefined
       }
       transition_order: {
         Args: {
