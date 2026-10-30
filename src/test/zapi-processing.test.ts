@@ -4,14 +4,16 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 
 const { send, ai } = vi.hoisted(() => ({ send: vi.fn(), ai: vi.fn() }));
-vi.mock("@/lib/zapi.server", () => ({ sendText: send }));
+vi.mock("@/lib/zapi.server", () => ({ sendText: send, sendAudio: vi.fn(async () => ({ messageId: "a" })) }));
+vi.mock("@/lib/tts.server", () => ({ synthesizeVoice: vi.fn(async () => null) }));
 vi.mock("@/lib/attendant.server", () => ({ runAttendant: ai }));
 
 function fakeDb(handoff: boolean, checkpoint: object) {
   const rpc = vi.fn(async (name: string) => ({ data: name === "claim_zapi_events" ? [{ id: "event", claim_token: "claim", establishment_id: "est", phone: "5511999999999", payload: { text: { message: "oi" } }, checkpoint, attempts: 1 }] : null, error: null }));
   const builder = (table: string) => {
     const q: Record<string, unknown> = {};
-    for (const method of ["select", "eq", "upsert", "update"]) q[method] = () => q;
+    for (const method of ["select", "eq", "upsert", "update", "in", "order", "limit"]) q[method] = () => q;
+    q['maybeSingle'] = async () => ({ data: null, error: null });
     q['single'] = async () => ({ data: table === "establishments" ? { automation_active: true } : { id: "conversation", messages: [], handoff, session: 1, last_order_id: null }, error: null });
     q['then'] = (resolve: (r: object) => void) => resolve({ error: null });
     return q;

@@ -1,13 +1,13 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { runAttendant } from "./attendant.server";
-import { sendText } from "./zapi.server";
+import { sendText, sendAudio } from "./zapi.server";
 import { brl } from "./pricing";
 
 type Event = Database["public"]["Tables"]["whatsapp_webhook_events"]["Row"];
 type Msg = { role: "user" | "assistant"; content: string };
 type Result = Exclude<Awaited<ReturnType<typeof runAttendant>>, { error: string }>;
-type Checkpoint = { result?: Result; messages?: Msg[]; session?: number; reply_state?: string; confirmation_state?: string; reply_id?: string; confirmation_id?: string; order_id?: string };
+type Checkpoint = { result?: Result; messages?: Msg[]; session?: number; reply_state?: string; confirmation_state?: string; audio_state?: string; reply_id?: string; confirmation_id?: string; order_id?: string };
 
 // Invoked only after webhook verification. No automatic resend after uncertain sends.
 export async function recoverZapiEvents(db: SupabaseClient<Database>) {
