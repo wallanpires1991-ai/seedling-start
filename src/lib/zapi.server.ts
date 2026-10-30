@@ -36,3 +36,7 @@ export async function zapi<T = unknown>(path: string, init?: { method?: string; 
 export function sendText(phone: string, message: string) {
   return zapi<{ messageId?: string }>("send-text", { method: "POST", body: { phone, message } });
 }
+
+export function sendAudio(phone: string, audio: string) {
+  return zapi<{ messageId?: string }>("send-audio", { method: "POST", body: { phone, audio, waveform: true } });
+}
