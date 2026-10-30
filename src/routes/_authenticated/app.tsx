@@ -3,7 +3,7 @@ import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-rout
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
-import { LayoutDashboard, Utensils, Bot, ClipboardList, ChefHat, MessageCircle, LogOut, Store } from "lucide-react";
+import { LayoutDashboard, Utensils, Bot, ClipboardList, ChefHat, MessageCircle, LogOut, Store, Star } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { EstCtx, type Establishment, type MemberRole } from "@/lib/establishment";
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,7 @@ const nav = [
   { to: "/app/pedidos", label: "Pedidos", icon: ClipboardList },
   { to: "/app/cozinha", label: "Cozinha", icon: ChefHat },
   { to: "/app/whatsapp", label: "WhatsApp", icon: MessageCircle },
+  { to: "/app/avaliacoes", label: "Avaliações", icon: Star },
 ] as const;
 
 function AppLayout() {

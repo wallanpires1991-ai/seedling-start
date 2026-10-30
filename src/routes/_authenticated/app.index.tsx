@@ -2,7 +2,7 @@ import { pageMeta } from "@/lib/metadata";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts";
-import { ShoppingBag, Wallet, Receipt, XCircle, Bot, FlaskConical } from "lucide-react";
+import { ShoppingBag, Wallet, Receipt, XCircle, Bot } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useEst } from "@/lib/establishment";
 import { brl } from "@/lib/pricing";
@@ -30,7 +30,6 @@ function Dashboard() {
   const revenue = valid.reduce((s, o) => s + Number(o.total), 0);
   const top = Object.entries((data?.items ?? []).reduce<Record<string, number>>((a, i) => ({ ...a, [i.name]: (a[i.name] ?? 0) + i.qty }), {}))
     .sort((a, b) => b[1] - a[1]).slice(0, 6).map(([name, qty]) => ({ name, qty }));
-  const testCount = orders.filter((o) => o.is_test).length;
 
   const kpis = [
     { label: "Pedidos hoje", value: String(orders.length), icon: ShoppingBag },
@@ -48,11 +47,6 @@ function Dashboard() {
         </div>
         <Button asChild variant="hero"><Link to="/app/simulador"><Bot className="size-4" />Testar minha IA</Link></Button>
       </div>
-      {testCount > 0 && (
-        <div className="flex items-center gap-2 rounded-xl border border-warning/40 bg-warning/10 px-4 py-3 text-sm">
-          <FlaskConical className="size-4" /> {testCount} pedido(s) de hoje são de teste (simulador) e estão incluídos nos números abaixo.
-        </div>
-      )}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {kpis.map((k) => (
           <div key={k.label} className="rounded-2xl border bg-card p-5 shadow-card">

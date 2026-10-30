@@ -39,7 +39,6 @@ function Pedidos() {
                     <div key={o.id} className="rounded-xl border bg-card p-3 text-sm shadow-card">
                       <div className="flex items-center justify-between">
                         <span className="font-display font-bold">#{o.code}</span>
-                        {o.is_test && <span className="rounded bg-warning/20 px-1.5 text-[10px] font-semibold uppercase">teste</span>}
                       </div>
                       <p className="text-muted-foreground">{o.customer_name} · {o.fulfillment === "pickup" ? "Retirada" : "Entrega"}</p>
                       <ul className="mt-2 text-xs">{o.order_items.map((i) => <li key={i.id}>{i.qty}× {i.name}</li>)}</ul>
