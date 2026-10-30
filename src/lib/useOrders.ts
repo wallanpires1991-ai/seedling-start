@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import type { Database } from "@/integrations/supabase/types";
+import { sendDeliverySurvey } from "./survey.functions";
 
 export function useOrders(estId: string) {
   const qc = useQueryClient();
@@ -35,5 +36,12 @@ export function useOrders(estId: string) {
 
 export async function setOrderStatus(id: string, status: string) {
   const { error } = await supabase.rpc("transition_order", { _id: id, _status: status as Database["public"]["Enums"]["order_status"] });
-  if (error) toast.error(error.message);
+  if (error) { toast.error(error.message); return; }
+  if (status === "delivered") {
+    try {
+      const r = await sendDeliverySurvey({ data: { orderId: id } });
+      if (r.sent) toast.success("Pesquisa de satisfação enviada ao cliente pelo WhatsApp.");
+      else if (r.reason) toast.message(r.reason);
+    } catch { toast.error("Não foi possível enviar a pesquisa de satisfação."); }
+  }
 }

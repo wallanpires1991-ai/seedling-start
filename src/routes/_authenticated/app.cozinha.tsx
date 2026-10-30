@@ -45,7 +45,7 @@ function Cozinha() {
               <div className="flex items-start justify-between">
                 <div>
                   <p className="font-display text-3xl font-bold">#{o.code}</p>
-                  <p className="text-sm text-muted-foreground">{o.customer_name} · {o.fulfillment === "pickup" ? "Retirada" : "Entrega"}{o.is_test ? " · TESTE" : ""}</p>
+                  <p className="text-sm text-muted-foreground">{o.customer_name} · {o.fulfillment === "pickup" ? "Retirada" : "Entrega"}</p>
                 </div>
                 <div className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-sm font-semibold ${late ? "bg-destructive text-destructive-foreground" : "bg-muted"}`}>
                   <Clock className="size-4" />{mins} min

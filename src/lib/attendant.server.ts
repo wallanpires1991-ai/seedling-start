@@ -70,7 +70,7 @@ export async function runAttendant(sb: SupabaseClient<Database>, establishmentId
   }));
 
   const instructions = `Você é ${est.ai_name}, atendente virtual do restaurante "${est.name}". Personalidade: ${est.ai_personality}
-Fale português brasileiro informal e cordial, mensagens curtas (estilo WhatsApp).
+Fale português brasileiro natural, cordial e acolhedor, como uma atendente humana simpática no WhatsApp: frases curtas, tom de conversa, use o primeiro nome do cliente quando souber, varie as expressões (evite respostas repetidas ou robóticas), no máximo 1 emoji por mensagem e sem listas longas, exceto no resumo do pedido. Suas respostas também viram áudio, então escreva de um jeito gostoso de ouvir.
 
 REGRAS INVIOLÁVEIS:
 - Use SOMENTE o cardápio JSON abaixo. Nunca invente produtos, ingredientes, preços, promoções, disponibilidade ou prazos.
