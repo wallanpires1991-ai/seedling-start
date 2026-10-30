@@ -55,6 +55,23 @@ async function processEvent(db: SupabaseClient<Database>, event: Event) {
       if (doneError) throw doneError;
       return;
     }
+    // Post-delivery satisfaction survey: rating 1-5, then an optional comment.
+    if (!cp.result) {
+      const { data: survey } = await db.from("order_surveys").select("id,state").eq("establishment_id", event.establishment_id).eq("phone", event.phone).in("state", ["sent", "awaiting_comment"]).order("sent_at", { ascending: false }).limit(1).maybeSingle();
+      const text = payload.text.message.trim();
+      const rating = survey?.state === "sent" ? text.match(/^\s*([1-5])\b/)?.[1] : undefined;
+      if (survey && (rating || survey.state === "awaiting_comment")) {
+        const reply = rating
+          ? `Obrigada pela nota ${rating}! 💚 Quer deixar um comentário sobre o pedido? Pode escrever aqui (ou responda "não").`
+          : "Muito obrigada pelo seu comentário! Ele nos ajuda a melhorar sempre. Até a próxima! 💚";
+        if (rating) await db.from("order_surveys").update({ rating: Number(rating), state: "awaiting_comment", answered_at: new Date().toISOString() }).eq("id", survey.id);
+        else await db.from("order_surveys").update({ comment: /^n[aã]o\.?$/i.test(text) ? null : text.slice(0, 1000), state: "done" }).eq("id", survey.id);
+        await send("reply", event.phone, reply);
+        const { error: doneError } = await db.rpc("finish_zapi_event", { _event: event.id, _claim: claim, _conversation: conv.id, _messages: (conv.messages ?? []) as Json, _session: conv.session, _order: conv.last_order_id ?? null as unknown as string, _handoff: conv.handoff, _name: conv.customer_name ?? "" });
+        if (doneError) throw doneError;
+        return;
+      }
+    }
     let result = cp.result;
     if (!result) {
       const r = await runAttendant(db, event.establishment_id, messages);
@@ -66,6 +83,20 @@ async function processEvent(db: SupabaseClient<Database>, event: Event) {
       await save();
     }
     await send("reply", event.phone, result.reply);
+    // Voice note with Rebeca's female voice; best effort, never resent once attempted.
+    if (!cp.audio_state) {
+      cp.audio_state = "sending";
+      await save();
+      try {
+        const { synthesizeVoice } = await import("./tts.server");
+        const audio = await synthesizeVoice(result.reply);
+        if (audio) await sendAudio(event.phone, audio);
+        cp.audio_state = audio ? "accepted" : "skipped";
+      } catch {
+        cp.audio_state = "failed";
+      }
+      await save();
+    }
     let session = cp.session ?? conv.session;
     let order = cp.order_id ?? conv.last_order_id;
     let updated: Msg[] = [...messages, { role: "assistant", content: result.reply }];
