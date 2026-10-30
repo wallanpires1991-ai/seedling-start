@@ -1,7 +1,8 @@
 # Roadmap
 
 ## Em aberto
-- [ ] Conexão Z-API por QR para uso real: atualizar chaves no formulário seguro, conectar o aparelho e verificar mensagens reais recebidas/respondidas antes de declarar pronto; atualização anterior foi cancelada.
+- [x] Conexão Z-API: chaves corrigidas (ID, Token e Client-Token da aba Segurança), número 553591653797 já pareado e reconhecido, webhooks de recebimento registrados; tela mostra "Conectado".
+- [ ] Teste real ponta a ponta: usuário envia mensagem de outro celular para (35) 99165-3797 e confere resposta da IA e pedido registrado; só então declarar atendimento real pronto.
 - [ ] Simplificar conexão: QR dentro da WALPIC, estado confirmado e falhas claras; não automatizar a página do WhatsApp Web.
 - [ ] Respostas em áudio em pt-BR com voz de atendimento: implementar geração/envio durável e validar áudio recebido no aparelho; não declarar disponível antes disso.
 - [ ] Evolução da qualidade do atendimento: usar cardápio e instruções aprovadas, preservar preços/confirmacão expressa e não prometer aprendizado automático sem supervisão.
