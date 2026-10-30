@@ -279,6 +279,60 @@ export type Database = {
           },
         ]
       }
+      order_surveys: {
+        Row: {
+          answered_at: string | null
+          comment: string | null
+          customer_name: string | null
+          establishment_id: string
+          id: string
+          order_id: string
+          phone: string
+          rating: number | null
+          sent_at: string
+          state: string
+        }
+        Insert: {
+          answered_at?: string | null
+          comment?: string | null
+          customer_name?: string | null
+          establishment_id: string
+          id?: string
+          order_id: string
+          phone: string
+          rating?: number | null
+          sent_at?: string
+          state?: string
+        }
+        Update: {
+          answered_at?: string | null
+          comment?: string | null
+          customer_name?: string | null
+          establishment_id?: string
+          id?: string
+          order_id?: string
+          phone?: string
+          rating?: number | null
+          sent_at?: string
+          state?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_surveys_establishment_id_fkey"
+            columns: ["establishment_id"]
+            isOneToOne: false
+            referencedRelation: "establishments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_surveys_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: true
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       orders: {
         Row: {
           address: string | null
@@ -293,7 +347,9 @@ export type Database = {
           idempotency_key: string | null
           is_test: boolean
           notes: string | null
+          payment_link: string | null
           payment_method: string
+          payment_ref: string | null
           payment_status: string
           request_key: string | null
           source: string
@@ -315,7 +371,9 @@ export type Database = {
           idempotency_key?: string | null
           is_test?: boolean
           notes?: string | null
+          payment_link?: string | null
           payment_method?: string
+          payment_ref?: string | null
           payment_status?: string
           request_key?: string | null
           source?: string
@@ -337,7 +395,9 @@ export type Database = {
           idempotency_key?: string | null
           is_test?: boolean
           notes?: string | null
+          payment_link?: string | null
           payment_method?: string
+          payment_ref?: string | null
           payment_status?: string
           request_key?: string | null
           source?: string
