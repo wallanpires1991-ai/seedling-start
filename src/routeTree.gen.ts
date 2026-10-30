@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
+import { Route as AuthenticatedAppAvaliacoesRouteImport } from './routes/_authenticated/app.avaliacoes'
 import { Route as AuthenticatedAppCardapioRouteImport } from './routes/_authenticated/app.cardapio'
 import { Route as AuthenticatedAppCozinhaRouteImport } from './routes/_authenticated/app.cozinha'
 import { Route as AuthenticatedAppPedidosRouteImport } from './routes/_authenticated/app.pedidos'
@@ -45,6 +46,12 @@ const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppAvaliacoesRoute =
+  AuthenticatedAppAvaliacoesRouteImport.update({
+    id: '/avaliacoes',
+    path: '/avaliacoes',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAppCardapioRoute =
   AuthenticatedAppCardapioRouteImport.update({
     id: '/cardapio',
@@ -83,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
+  '/app/avaliacoes': typeof AuthenticatedAppAvaliacoesRoute
   '/app/cardapio': typeof AuthenticatedAppCardapioRoute
   '/app/cozinha': typeof AuthenticatedAppCozinhaRoute
   '/app/pedidos': typeof AuthenticatedAppPedidosRoute
@@ -94,6 +102,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/app/avaliacoes': typeof AuthenticatedAppAvaliacoesRoute
   '/app/cardapio': typeof AuthenticatedAppCardapioRoute
   '/app/cozinha': typeof AuthenticatedAppCozinhaRoute
   '/app/pedidos': typeof AuthenticatedAppPedidosRoute
@@ -108,6 +117,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
+  '/_authenticated/app/avaliacoes': typeof AuthenticatedAppAvaliacoesRoute
   '/_authenticated/app/cardapio': typeof AuthenticatedAppCardapioRoute
   '/_authenticated/app/cozinha': typeof AuthenticatedAppCozinhaRoute
   '/_authenticated/app/pedidos': typeof AuthenticatedAppPedidosRoute
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/app'
+    | '/app/avaliacoes'
     | '/app/cardapio'
     | '/app/cozinha'
     | '/app/pedidos'
@@ -133,6 +144,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/app/avaliacoes'
     | '/app/cardapio'
     | '/app/cozinha'
     | '/app/pedidos'
@@ -146,6 +158,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/app'
+    | '/_authenticated/app/avaliacoes'
     | '/_authenticated/app/cardapio'
     | '/_authenticated/app/cozinha'
     | '/_authenticated/app/pedidos'
@@ -199,6 +212,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/avaliacoes': {
+      id: '/_authenticated/app/avaliacoes'
+      path: '/avaliacoes'
+      fullPath: '/app/avaliacoes'
+      preLoaderRoute: typeof AuthenticatedAppAvaliacoesRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/cardapio': {
       id: '/_authenticated/app/cardapio'
       path: '/cardapio'
@@ -245,6 +265,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAppRouteChildren {
+  AuthenticatedAppAvaliacoesRoute: typeof AuthenticatedAppAvaliacoesRoute
   AuthenticatedAppCardapioRoute: typeof AuthenticatedAppCardapioRoute
   AuthenticatedAppCozinhaRoute: typeof AuthenticatedAppCozinhaRoute
   AuthenticatedAppPedidosRoute: typeof AuthenticatedAppPedidosRoute
@@ -254,6 +275,7 @@ interface AuthenticatedAppRouteChildren {
 }
 
 const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
+  AuthenticatedAppAvaliacoesRoute: AuthenticatedAppAvaliacoesRoute,
   AuthenticatedAppCardapioRoute: AuthenticatedAppCardapioRoute,
   AuthenticatedAppCozinhaRoute: AuthenticatedAppCozinhaRoute,
   AuthenticatedAppPedidosRoute: AuthenticatedAppPedidosRoute,

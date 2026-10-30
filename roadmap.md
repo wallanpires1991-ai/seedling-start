@@ -15,5 +15,8 @@
 - [ ] Integrações reais de pagamentos e impressão (pendentes).
 - [ ] Painel superadmin, configuração avançada, importação, CRM/fidelidade, convites, edição de produto, revisão LGPD (fases pendentes do prompt mestre).
 
+- [ ] Link de pagamento Mercado Pago (Pix e cartão) enviado pela Rebeca — aguarda token de acesso do Mercado Pago.
+- [x] Pesquisa pós-entrega (nota 1–5 + comentário) e tela Avaliações; pedidos de teste zerados; atendente Rebeca; áudio com voz feminina (envio no aparelho ainda não confirmado).
+
 ## Concluído
 - [x] Fase 1 do MVP: perfis, cardápio, pedidos, cozinha, dashboard, simulador de IA, branding WEPIC AI.
